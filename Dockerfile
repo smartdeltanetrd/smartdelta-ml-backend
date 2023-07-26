@@ -23,8 +23,6 @@ RUN apt-get update && apt-get install -y \
     graphviz-dev \
     libgraphviz-dev
 
-RUN python3.8 -m pip install pip
-
 # For click python package
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
@@ -36,6 +34,13 @@ RUN export uid=$user_uid gid=$user_gid && \
     echo $group_name":x:${gid}:" >> /etc/group && \
     echo $user_name" ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$user_name && \
     chmod 0440 /etc/sudoers.d/$user_name
+
+# Set the working directory and copy the requirements.txt
+WORKDIR /home/$user_name
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN python3.8 -m pip install -r requirements.txt
 
 # Credentials for S3 should be set up in ~/.aws/config file as "mera" profile
 

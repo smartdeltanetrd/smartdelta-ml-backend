@@ -14,5 +14,6 @@ docker build --network host -f Dockerfile --build-arg user_name=`id -nu` --build
 **Run** command:  
 ```
 docker run --runtime=nvidia -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ~:/home/${USER} --net=host ${USER}_smartdelta_ml_server bash
+docker run -p 5003 ${USER}_smartdelta_ml_server
 ```
 
