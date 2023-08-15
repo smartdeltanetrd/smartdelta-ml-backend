@@ -32,17 +32,10 @@ RUN export uid=$user_uid gid=$user_gid && \
     mkdir -p /etc/sudoers.d && \
     echo $user_name":x:${uid}:${gid}:Container builder,,,:/home/"$user_name":/bin/bash" >> /etc/passwd && \
     echo $group_name":x:${gid}:" >> /etc/group && \
+    echo $user_name"::::::::" >> /etc/shadow && \
+    echo $group_name":!::" >> /etc/gshadow && \
     echo $user_name" ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$user_name && \
     chmod 0440 /etc/sudoers.d/$user_name
-
-# Set the working directory and copy the requirements.txt
-WORKDIR /home/$user_name
-COPY requirements.txt .
-
-# Install Python dependencies
-RUN python3.8 -m pip install -r requirements.txt
-
-# Credentials for S3 should be set up in ~/.aws/config file as "mera" profile
 
 USER $user_name:$group_name
 ENV HOME=/home/$user_name
