@@ -59,10 +59,16 @@ This section outlines how to use the `categorical_comparison` route.
 
 Send a POST request to the `/categorical_comparison` route with two log files (CSV format) attached.
 
-#### Example using axios (JavaScript):
+### Example Request using Axios (JavaScript):
+
+Certainly! Here's the request code part as a table in Markdown syntax:
+
+```markdown
+### Example Request using Axios (JavaScript)in Node.js:
 
 ```javascript
 const formData = new FormData();
+
 formData.append('file1', csvStream1, 'data1.csv');
 formData.append('file2', csvStream2, 'data2.csv');
 
@@ -72,9 +78,20 @@ const apiResponse = await axios.post('http://127.0.0.1:5006/categorical_comparis
 });
 ```
 
+| Body Parameter | Type            | Description                                |
+| -------------- | --------------- | ------------------------------------------ |
+| `file1`        | `file/csv`      | **Requested**. CSV file for the first set of data. |
+| `file2`        | `file/csv`      | **Requested**. CSV file for the second set of data. |
+
+```
+
 ### Response
 
 The API will respond with a JSON object containing the categorical comparison results.
+Certainly! Here's the response code part as a table in Markdown syntax:
+
+```markdown
+### Example Response JSON Object:
 
 ```json
 {
@@ -116,6 +133,12 @@ The API will respond with a JSON object containing the categorical comparison re
   ]
 }
 ```
+
+| Key            | Value   | Description                                       |
+| -------------- | ------- | ------------------------------------------------- |
+| `file1`        | Object  | Results for the first CSV file.                   |
+| `file2`        | Object  | Results for the second CSV file.                  |
+| `noise`        | Array   | Information about noise instances in both files.  |
 
 The response contains information about clusters, message instances, and noise instances for each file, along with their occurrence percentages.
 
