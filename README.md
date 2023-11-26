@@ -61,7 +61,7 @@ Send a POST request to the `/categorical_comparison` route with two log files (C
 
 ### Example Request using Axios (JavaScript):
 
-Certainly! Here's the request code part as a table in Markdown syntax:
+Here's the request code part as a table in Markdown syntax:
 
 ```markdown
 ### Example Request using Axios (JavaScript)in Node.js:
@@ -90,7 +90,7 @@ const apiResponse = await axios.post('http://127.0.0.1:5006/categorical_comparis
 The API will respond with a JSON object containing the categorical comparison results.
 Certainly! Here's the response code part as a table in Markdown syntax:
 
-```markdown
+
 ### Example Response JSON Object:
 
 ```json
