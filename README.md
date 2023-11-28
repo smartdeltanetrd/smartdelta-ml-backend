@@ -88,7 +88,6 @@ const apiResponse = await axios.post('http://127.0.0.1:5006/categorical_comparis
 ### Response
 
 The API will respond with a JSON object containing the categorical comparison results.
-Certainly! Here's the response code part as a table in Markdown syntax:
 
 
 ### Example Response JSON Object:
