@@ -10,7 +10,7 @@ This container:
 ```
 docker build --network host -f Dockerfile --build-arg user_name=`id -nu` --build-arg group_name=`id -ng` --build-arg user_uid=`id -u` --build-arg user_gid=`id -g` --tag ${USER}_smartdelta_ml_server .
 ```
-
+  
 **Run** command:  
 ```
 docker run --runtime=nvidia -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ~:/home/${USER} --net=host ${USER}_smartdelta_ml_server bash
