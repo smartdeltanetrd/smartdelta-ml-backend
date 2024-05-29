@@ -1,28 +1,24 @@
 import logging
 import time
+import numpy as np
+from app.LogAnalyzer import *
 
 
 def detect_anomalies(logs):
     # TODO: use ml or another ds solution to categorize logs message then detect anomalies 
-    time.sleep(2)
-         # Dummy array of objects
-    dummy_anomalies = [
-            {
-                'anomaly_score': 85,
-                'anomaly': 'Fewer log messages',
-                'start_time': '2024-01-31T12:00:00',
-                'dataSet': 'unknown'
-            },
-           {
-                'anomaly_score': 99,
-                'anomaly': 'Fewer log messages',
-                'start_time': '2024-01-31T12:00:00',
-                'dataSet': 'unknown'
-            },
-           
-        ]
-    sorted_anomalies = sorted(dummy_anomalies, key=lambda x: x['anomaly_score'], reverse=True)
+    log_analyzer = LogAnalyzer(logs)
+    WIN_SIZE_SEC = 3
+    N_PTS = 1000
+  
+    #anomaly_list = log_analyzer.report_anomalies('@timestamp', WIN_SIZE_SEC)
 
+ 
+ 
+    noise = np.random.normal(loc=-8*WIN_SIZE_SEC, scale=5*WIN_SIZE_SEC, size=N_PTS)
+    noise[noise < 0] = 0
+    
+    anomaly_list = log_analyzer.gen_data_and_report_result(noise,WIN_SIZE_SEC)
+    sorted_anomalies = sorted(anomaly_list, key=lambda x: x['score'], reverse=True)
     return sorted_anomalies
 
 

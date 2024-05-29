@@ -61,28 +61,23 @@ def categorical_comparison():
         output_folder = os.path.join(app_folder, 'outputs')
 
 # Construct the absolute paths to your CSV files
-        file1_path = os.path.join(data_folder, 'chatbroker.csv')
-        file2_path = os.path.join(data_folder, 'smsbroker.csv')
-        
-        file1_output_path = os.path.join(output_folder, 'chatbroker.csv')
-        file2_output_path = os.path.join(output_folder, 'smsbroker.csv')
-        
-        file1.save(file1_output_path)
-        file2.save(file2_output_path)
-
-        
-
-
 
        # Convert file streams to DataFrames
-        logs1_df = read_csv_to_dataframe(file1_path)
-        logs2_df = read_csv_to_dataframe(file2_path)
+        logs1_df = pd.read_csv('app/data/chatbroker.csv')
+        logs2_df = pd.read_csv('app/data/smsbroker.csv')
+        logs1_df = logs1_df[:len(logs2_df)]  # temporary hack
+
         print("Columns in logs1_df:", logs1_df.columns)
         print("Columns in logs2_df:", logs2_df.columns)
 
 
         msgs1 =  MessageList(logs1_df,'file1', verbose=True)
         msgs2 =  MessageList(logs2_df,'file2', verbose=True)
+        #
+        msgs1 = MessageList(logs1_df, 'app/data/chatbroker.csv', verbose=True)
+        msgs2 = MessageList(logs2_df, 'app/data/smsbroker.csv', verbose=True)
+
+		#
         stat1, cat_field_names1 = msgs1.categorical_combinations_stat()
 
         stat2, cat_field_names2 = msgs2.categorical_combinations_stat()
@@ -112,10 +107,10 @@ def categorical_comparison():
 def anomaly_detection():
     try:
         data = request.json.get('data')  # Assuming the data is sent as JSON
-        print('Received data:', data)
+        #print('Received data:', data)
         # Process the array data as needed
         anomalies = detect_anomalies(data)
-        result = {'message': 'Log data received successfully and anomalies detected', 'data': anomalies}
+        result = {'message': 'Log data received successfully and anomaly detection implemented', 'data': anomalies}
         return jsonify(result), 200
     except Exception as e:
         logging.error("Anomaly Detection endpoint failed: %s", str(e))
