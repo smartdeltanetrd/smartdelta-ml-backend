@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.data_utils import read_csv_to_dataframe, validate_and_get_file, validate_and_get_filePair
 from app.MessageList import *
+from app.trend_prediction import plot_case, generate_resource_load
 import time
 import logging
 from io import StringIO
@@ -119,3 +120,23 @@ def anomaly_detection():
     except Exception as e:
         logging.error("Anomaly Detection endpoint failed: %s", str(e))
         return jsonify(message="An error occurred during detection.", error=str(e)), 500
+
+@bp.route('/predict_resource', methods=['GET'])
+def trend_prediction():
+    try:
+        GENERATED_DATA_PTS = 700
+        WARNING_VALUE = 90
+
+        res_times, res_vals = generate_resource_load(GENERATED_DATA_PTS, 'linear')
+        
+        result = plot_case(res_times, res_vals, WARNING_VALUE)
+        print(result)
+        return jsonify({
+            'message': 'Trend prediction completed successfully',
+            'result': result
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'message': 'Error occurred during trend prediction',
+            'error': str(e),
+        }), 500
