@@ -15,10 +15,7 @@ logging.basicConfig(level=logging.INFO)
 
 from app.usecases import anomaly_train, next_hop_train, detect_anomalies
 
-# Health Check Endpoint
-@bp.route('/health', methods=['GET'])
-def health_check():
-    return jsonify({"status": "healthy"}), 200
+
 
 @bp.route('/train', methods=['POST'])
 def train():
